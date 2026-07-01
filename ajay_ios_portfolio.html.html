@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajaykumar Athmakuri — iOS Developer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0A0E1A;
+    --slate: #1C2333;
+    --card: #141927;
+    --blue: #4F8EF7;
+    --blue-glow: rgba(79,142,247,0.18);
+    --blue-dim: #2563c4;
+    --white: #E8EDF5;
+    --muted: #8B9DC3;
+    --border: rgba(139,157,195,0.15);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 6vw;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.06em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue);
+    color: #fff !important;
+    padding: 7px 16px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--blue-dim) !important; color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    padding: 100px 6vw 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--blue);
+  }
+  .hero-name {
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .hero-name span { color: var(--blue); }
+  .hero-role {
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.75;
+    margin-bottom: 36px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--blue-dim); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--blue); color: var(--white); }
+
+  /* ── PHONE MOCKUP ── */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .phone-wrap {
+    position: relative;
+    animation: float 5s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-18px) rotate(-2deg); }
+  }
+  .phone {
+    width: 220px;
+    background: #1a1f2e;
+    border-radius: 38px;
+    padding: 12px;
+    border: 2px solid rgba(255,255,255,0.08);
+    box-shadow:
+      0 60px 80px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.04),
+      inset 0 0 0 1px rgba(255,255,255,0.03);
+    position: relative;
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 14px; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 20px;
+    background: #0f1320;
+    border-radius: 10px;
+    z-index: 10;
+  }
+  .phone-screen {
+    background: linear-gradient(160deg, #0e1422 0%, #131929 100%);
+    border-radius: 28px;
+    height: 420px;
+    overflow: hidden;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 44px 14px 14px;
+    gap: 10px;
+    align-content: start;
+  }
+  .app-icon {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    opacity: 0;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .app-icon:nth-child(1)  { background: linear-gradient(135deg,#2a5298,#1e3a8a); animation-delay:0.3s; }
+  .app-icon:nth-child(2)  { background: linear-gradient(135deg,#1a9e6e,#0d7a56); animation-delay:0.45s; }
+  .app-icon:nth-child(3)  { background: linear-gradient(135deg,#c84b31,#a33520); animation-delay:0.6s; }
+  .app-icon:nth-child(4)  { background: linear-gradient(135deg,#7c3aed,#5b21b6); animation-delay:0.75s; }
+  .app-icon:nth-child(5)  { background: linear-gradient(135deg,#d97706,#b45309); animation-delay:0.9s; }
+  .app-icon:nth-child(6)  { background: linear-gradient(135deg,#0891b2,#0e7490); animation-delay:1.05s; }
+  .app-icon:nth-child(7)  { background: linear-gradient(135deg,#be185d,#9d174d); animation-delay:1.2s; }
+  .app-icon:nth-child(8)  { background: linear-gradient(135deg,#16a34a,#15803d); animation-delay:1.35s; }
+  .app-icon:nth-child(9)  { background: linear-gradient(135deg,#1d4ed8,#1e40af); animation-delay:1.5s; }
+  .app-icon:nth-child(10) { background: linear-gradient(135deg,#dc2626,#b91c1c); animation-delay:1.65s; }
+  .app-icon:nth-child(11) { background: linear-gradient(135deg,#ca8a04,#a16207); animation-delay:1.8s; }
+  .app-icon:nth-child(12) { background: linear-gradient(135deg,#2563eb,#1d4ed8); animation-delay:1.95s; }
+  @keyframes popIn {
+    to { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: scale(0.5); }
+  }
+
+  /* orbit dots */
+  .orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(79,142,247,0.2);
+    pointer-events: none;
+  }
+  .orbit-1 { width: 320px; height: 320px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .orbit-2 { width: 460px; height: 460px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .orbit-dot {
+    position: absolute;
+    width: 7px; height: 7px;
+    background: var(--blue);
+    border-radius: 50%;
+    top: -3.5px; left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px var(--blue);
+  }
+  .orbit-1 { animation: spin 12s linear infinite; }
+  .orbit-2 { animation: spin 20s linear infinite reverse; }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  /* ── STATS ── */
+  .stats-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+  .stat {
+    flex: 1;
+    max-width: 220px;
+    padding: 28px 24px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--blue);
+    letter-spacing: -0.04em;
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 88px 6vw; }
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 48px;
+    line-height: 1.1;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+  .skill-icon {
+    width: 44px; height: 44px;
+    background: var(--blue-glow);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(79,142,247,0.25);
+  }
+  .skill-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+  .tag {
+    background: rgba(79,142,247,0.1);
+    color: var(--blue);
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid rgba(79,142,247,0.2);
+  }
+  .tag-gray {
+    background: rgba(139,157,195,0.08);
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list { display: flex; flex-direction: column; gap: 28px; }
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: var(--blue); }
+  .exp-company {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .exp-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .exp-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 4px;
+  }
+  .exp-bullets {
+    margin-top: 14px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .exp-bullets li {
+    font-size: 13.5px;
+    color: var(--muted);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--blue);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 22px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .project-card:hover { transform: translateY(-5px); border-color: var(--blue); }
+  .project-thumb {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: inherit;
+    filter: brightness(0.4);
+    z-index: 0;
+  }
+  .project-thumb span { position: relative; z-index: 1; }
+  .p-blue   { background: linear-gradient(135deg, #1e3a8a, #2563eb); }
+  .p-green  { background: linear-gradient(135deg, #064e3b, #059669); }
+  .p-purple { background: linear-gradient(135deg, #4c1d95, #7c3aed); }
+  .project-body { padding: 22px; }
+  .project-body h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .project-body p {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+  .edu-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--blue-glow);
+    border: 1px solid rgba(79,142,247,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .edu-degree { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .edu-uni { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .edu-year { font-family: var(--mono); font-size: 11px; color: var(--blue); }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--slate);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 80px 6vw;
+  }
+  .contact-section .section-title { margin-bottom: 16px; }
+  .contact-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--blue); color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 30px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  footer p { font-size: 12px; color: var(--muted); }
+  .footer-mono { font-family: var(--mono); font-size: 11px; color: var(--blue); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 780px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 90px; }
+    .hero-eyebrow { justify-content: center; }
+    .hero-desc { margin: 0 auto 28px; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { display: none; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+    .exp-card { grid-template-columns: 1fr; }
+    .exp-period { text-align: left; }
+    nav .nav-links { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .phone-wrap { animation: none; }
+    .orbit-1, .orbit-2 { animation: none; }
+    .app-icon { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ajay.dev</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">iOS Developer · Hyderabad, India</div>
+    <h1 class="hero-name">Ajaykumar<br><span>Athmakuri</span></h1>
+    <p class="hero-role">Building apps that feel native to the wrist, palm & pocket.</p>
+    <p class="hero-desc">3+ years crafting Swift-powered iOS experiences — from enterprise platforms managing port operations to SaaS tools connecting partner ecosystems. Targeting product-led companies where performance and craft both matter.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">📬 Get in Touch</a>
+      <a href="#experience" class="btn-outline">View Experience →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+    <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="app-icon">📦</div>
+          <div class="app-icon">🗺️</div>
+          <div class="app-icon">🔐</div>
+          <div class="app-icon">📊</div>
+          <div class="app-icon">🚛</div>
+          <div class="app-icon">💬</div>
+          <div class="app-icon">🔔</div>
+          <div class="app-icon">🧭</div>
+          <div class="app-icon">📋</div>
+          <div class="app-icon">🔗</div>
+          <div class="app-icon">⚙️</div>
+          <div class="app-icon">📡</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num">3+</span>
+    <div class="stat-label">Years iOS Dev</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">2</span>
+    <div class="stat-label">Platforms Shipped</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">Swift</span>
+    <div class="stat-label">Primary Language</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">MCA</span>
+    <div class="stat-label">Osmania University</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-eyebrow">// what I work with</div>
+  <h2 class="section-title">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🍎</div>
+      <h3>iOS Core</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Native iOS development from architecture to App Store submission.</p>
+      <div class="skill-tags">
+        <span class="tag">Swift</span>
+        <span class="tag">SwiftUI</span>
+        <span class="tag">UIKit</span>
+        <span class="tag">Xcode</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏗️</div>
+      <h3>Architecture</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Clean, scalable patterns for maintainable codebases.</p>
+      <div class="skill-tags">
+        <span class="tag">MVC</span>
+        <span class="tag">MVVM</span>
+        <span class="tag">Combine</span>
+        <span class="tag">CoreData</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <h3>Networking & APIs</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Robust async networking and third-party integrations.</p>
+      <div class="skill-tags">
+        <span class="tag">REST APIs</span>
+        <span class="tag">URLSession</span>
+        <span class="tag">Alamofire</span>
+        <span class="tag">JSON</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <h3>Dev Tooling</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Full development lifecycle from branching to delivery.</p>
+      <div class="skill-tags">
+        <span class="tag">Git</span>
+        <span class="tag">CocoaPods</span>
+        <span class="tag">SPM</span>
+        <span class="tag">TestFlight</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔔</div>
+      <h3>Platform Features</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Leveraging Apple frameworks for real device capabilities.</p>
+      <div class="skill-tags">
+        <span class="tag">Push Notifications</span>
+        <span class="tag">CoreLocation</span>
+        <span class="tag">AVFoundation</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <h3>Data & Storage</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Persistent local and cloud-based data strategies.</p>
+      <div class="skill-tags">
+        <span class="tag">Core Data</span>
+        <span class="tag">UserDefaults</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">SQLite</span>
+      </div>
+    </div>
+    <div class="skill-card" style="border-color:rgba(79,142,247,0.35);background:linear-gradient(135deg,#141927,#0f1a2e);">
+      <div class="skill-icon" style="background:rgba(79,142,247,0.22);border-color:rgba(79,142,247,0.4);">🤖</div>
+      <h3>AI-Assisted Development</h3>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Leveraging AI tools to accelerate development, improve code quality, and solve complex problems faster.</p>
+      <div class="skill-tags">
+        <span class="tag">GitHub Copilot</span>
+        <span class="tag">Claude AI</span>
+        <span class="tag">ChatGPT</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">AI Code Review</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--slate);">
+  <div class="section-eyebrow">// career timeline</div>
+  <h2 class="section-title">Work Experience</h2>
+  <div class="exp-list">
+
+    <div class="exp-card">
+      <div>
+        <div class="exp-company">Infyz Solutions</div>
+        <div class="exp-title">iOS Developer — epcOne Platform</div>
+        <div class="exp-desc">Enterprise mobile platform for port terminal and plant operations, serving Equipment and Vehicle Processing Centers with real-time inventory tracking and logistics.</div>
+        <ul class="exp-bullets">
+          <li>Developed iOS modules for inventory tracking, vehicle processing, and dispatch management within the epcOne platform.</li>
+          <li>Built responsive UI screens in Swift/UIKit aligned with enterprise UX requirements and offline-first architecture.</li>
+          <li>Integrated REST APIs for real-time synchronisation with web-based backend systems.</li>
+          <li>Collaborated with cross-functional teams on feature scoping, sprint planning, and QA testing cycles.</li>
+        </ul>
+        <div class="skill-tags" style="margin-top:16px;">
+          <span class="tag">Swift</span><span class="tag">UIKit</span><span class="tag">REST API</span><span class="tag">Core Data</span><span class="tag tag-gray">Enterprise</span>
+        </div>
+      </div>
+      <div class="exp-period">Oct 2025 –<br>Present</div>
+    </div>
+
+    <div class="exp-card" style="border-left: 3px solid var(--border);">
+      <div>
+        <div class="exp-company" style="color:var(--muted);">Career Break</div>
+        <div class="exp-title" style="font-size:16px;color:var(--muted)">Family & Professional Development</div>
+        <div class="exp-desc">Dedicated time to family responsibilities and self-directed technical growth — deepening knowledge of SwiftUI, system design, and DSA in preparation for product-company interviews.</div>
+      </div>
+      <div class="exp-period" style="color:rgba(139,157,195,0.5)">Jul 2024 –<br>Sep 2025</div>
+    </div>
+
+    <div class="exp-card">
+      <div>
+        <div class="exp-company">InstaVC Technologies</div>
+        <div class="exp-title">iOS Developer — inLynk Platform</div>
+        <div class="exp-desc">SaaS partner engagement platform enabling businesses to manage partner networks, communication workflows, and real-time collaboration.</div>
+        <ul class="exp-bullets">
+          <li>Built and maintained iOS features for the inLynk partner engagement application using Swift and UIKit.</li>
+          <li>Implemented real-time communication features including in-app chat and push notification systems.</li>
+          <li>Designed reusable component libraries to accelerate feature development across the team.</li>
+          <li>Participated in code reviews and maintained code quality standards in an Agile team environment.</li>
+        </ul>
+        <div class="skill-tags" style="margin-top:16px;">
+          <span class="tag">Swift</span><span class="tag">UIKit</span><span class="tag">Push Notifications</span><span class="tag">Agile</span><span class="tag tag-gray">SaaS</span>
+        </div>
+      </div>
+      <div class="exp-period">Mar 2023 –<br>Jun 2024</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-eyebrow">// things I've built</div>
+  <h2 class="section-title">Notable Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb p-blue"><span>🚢</span></div>
+      <div class="project-body">
+        <h3>epcOne — Port Operations</h3>
+        <p>Enterprise iOS app managing inventory, vehicle processing, and dispatch logistics across port terminal and plant operations centres.</p>
+        <div class="skill-tags"><span class="tag">Swift</span><span class="tag">UIKit</span><span class="tag">Core Data</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb p-green"><span>🤝</span></div>
+      <div class="project-body">
+        <h3>inLynk — Partner Engagement</h3>
+        <p>SaaS iOS application enabling partner onboarding, communication, and real-time collaboration for businesses managing distributed partner networks.</p>
+        <div class="skill-tags"><span class="tag">Swift</span><span class="tag">REST API</span><span class="tag">Notifications</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb p-purple"><span>🧠</span></div>
+      <div class="project-body">
+        <h3>SwiftUI Practice Apps</h3>
+        <p>Personal projects built during professional development period — exploring declarative UI patterns, Combine, and modern Swift concurrency.</p>
+        <div class="skill-tags"><span class="tag">SwiftUI</span><span class="tag">Combine</span><span class="tag">async/await</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section style="background:var(--slate);">
+  <div class="section-eyebrow">// academic background</div>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Master of Computer Applications (MCA)</div>
+        <div class="edu-uni">Osmania University</div>
+        <div class="edu-year">Hyderabad, India</div>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-icon">💻</div>
+      <div>
+        <div class="edu-degree">B.Sc. in Computer Science</div>
+        <div class="edu-uni">Satavahana University</div>
+        <div class="edu-year">Karimnagar, India</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-eyebrow" style="text-align:center;display:block;">// let's connect</div>
+  <h2 class="section-title">Open to Opportunities</h2>
+  <p class="contact-sub">Actively exploring iOS Developer roles — open to any company, anywhere.<br>Available for <strong style="color:var(--white)">Remote</strong>, <strong style="color:var(--white)">Onsite</strong>, or <strong style="color:var(--white)">Office</strong> opportunities.</p>
+  <div class="contact-links">
+    <a href="tel:+918790534806" class="contact-link">📞 +91 87905 34806</a>
+    <a href="mailto:athmakuriajay@gmail.com" class="contact-link">📧 athmakuriajay@gmail.com</a>
+    <a href="https://www.linkedin.com/in/ajaykumar-athmakuri" target="_blank" class="contact-link">💼 LinkedIn</a>
+    <a href="https://github.com/AjayAthmakuri1" target="_blank" class="contact-link">🐙 GitHub</a>
+    <a href="#" onclick="generateResume(); return false;" class="contact-link">📄 Download CV</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Ajaykumar Athmakuri</p>
+  <span class="footer-mono">Built for iOS · Crafted in Swift of mind</span>
+</footer>
+
+<script>
+function generateResume() {
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a2e; line-height: 1.5; padding: 36px 44px; }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: #0a0e1a; }
+  .subtitle { font-size: 13px; color: #4F8EF7; font-weight: 600; margin-top: 3px; }
+  .contact-row { display:flex; gap:18px; flex-wrap:wrap; margin-top:6px; font-size:12px; color:#555; }
+  hr { border:none; border-top: 1.5px solid #e0e4ef; margin: 14px 0; }
+  .section-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#4F8EF7; margin-bottom:10px; }
+  .exp-item { margin-bottom:16px; }
+  .exp-header { display:flex; justify-content:space-between; align-items:baseline; }
+  .exp-role { font-size:14px; font-weight:700; color:#0a0e1a; }
+  .exp-company { font-size:12px; color:#4F8EF7; font-weight:600; }
+  .exp-period { font-size:11px; color:#888; }
+  ul { padding-left:16px; margin-top:6px; }
+  ul li { font-size:12.5px; color:#444; margin-bottom:4px; }
+  .skills-grid { display:flex; flex-wrap:wrap; gap:6px; }
+  .skill-tag { background:#eef2ff; color:#3b5bdb; font-size:11px; padding:3px 9px; border-radius:4px; font-weight:500; }
+  .edu-item { display:flex; justify-content:space-between; margin-bottom:8px; }
+  .edu-deg { font-size:13px; font-weight:700; }
+  .edu-uni { font-size:12px; color:#666; }
+  .break-item { margin-bottom:14px; }
+  .break-role { font-size:13.5px; font-weight:600; color:#888; font-style:italic; }
+</style>
+</head>
+<body>
+  <h1>Ajaykumar Athmakuri</h1>
+  <div class="subtitle">iOS Developer</div>
+  <div class="contact-row">
+    <span>📞 +91 87905 34806</span>
+    <span>📧 athmakuriajay@gmail.com</span>
+    <span>📍 Hyderabad, India</span>
+    <span>💼 linkedin.com/in/ajaykumar-athmakuri</span>
+    <span>🐙 github.com/AjayAthmakuri1</span>
+  </div>
+
+  <hr>
+
+  <div class="section-title">Summary</div>
+  <p style="font-size:13px;color:#444;line-height:1.65">iOS Developer with 3+ years of experience building native Swift applications for enterprise and SaaS platforms. Skilled in UIKit, SwiftUI, REST API integration, and Core Data. Passionate about clean architecture and performance-focused mobile experiences. Actively seeking roles at product-based companies.</p>
+
+  <hr>
+
+  <div class="section-title">Work Experience</div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">iOS Developer</div>
+        <div class="exp-company">Infyz Solutions — epcOne Platform</div>
+      </div>
+      <div class="exp-period">Oct 2025 – Present</div>
+    </div>
+    <ul>
+      <li>Developed iOS modules for inventory tracking, vehicle processing, and dispatch management.</li>
+      <li>Built responsive UIKit screens with offline-first architecture for port terminal operations.</li>
+      <li>Integrated REST APIs for real-time sync with web-based backend systems.</li>
+      <li>Collaborated on feature scoping, sprint planning, and QA in Agile cycles.</li>
+    </ul>
+  </div>
+
+  <div class="break-item">
+    <div class="exp-header">
+      <div>
+        <div class="break-role">Career Break — Family &amp; Professional Development</div>
+      </div>
+      <div class="exp-period">Jul 2024 – Sep 2025</div>
+    </div>
+    <p style="font-size:12.5px;color:#888;margin-top:4px">Self-directed study in SwiftUI, system design, and data structures &amp; algorithms in preparation for product-company interviews.</p>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">iOS Developer</div>
+        <div class="exp-company">InstaVC Technologies — inLynk Platform</div>
+      </div>
+      <div class="exp-period">Mar 2023 – Jun 2024</div>
+    </div>
+    <ul>
+      <li>Built and maintained iOS features for the inLynk SaaS partner engagement app.</li>
+      <li>Implemented real-time in-app chat and push notification systems.</li>
+      <li>Designed reusable UI component libraries to accelerate team feature development.</li>
+      <li>Maintained code quality standards through code reviews in an Agile environment.</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <span class="skill-tag">Swift</span>
+    <span class="skill-tag">SwiftUI</span>
+    <span class="skill-tag">UIKit</span>
+    <span class="skill-tag">Xcode</span>
+    <span class="skill-tag">MVVM</span>
+    <span class="skill-tag">MVC</span>
+    <span class="skill-tag">Combine</span>
+    <span class="skill-tag">Core Data</span>
+    <span class="skill-tag">REST APIs</span>
+    <span class="skill-tag">URLSession</span>
+    <span class="skill-tag">Alamofire</span>
+    <span class="skill-tag">Push Notifications</span>
+    <span class="skill-tag">CoreLocation</span>
+    <span class="skill-tag">Git</span>
+    <span class="skill-tag">CocoaPods</span>
+    <span class="skill-tag">SPM</span>
+    <span class="skill-tag">TestFlight</span>
+    <span class="skill-tag">Firebase</span>
+  </div>
+
+  <hr>
+
+  <div class="section-title">Education</div>
+  <div class="edu-item">
+    <div>
+      <div class="edu-deg">Master of Computer Applications (MCA)</div>
+      <div class="edu-uni">Osmania University, Hyderabad</div>
+    </div>
+  </div>
+  <div class="edu-item">
+    <div>
+      <div class="edu-deg">B.Sc. in Computer Science</div>
+      <div class="edu-uni">Satavahana University, Karimnagar</div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  if (win) {
+    win.onload = () => {
+      win.print();
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
+    };
+  } else {
+    // fallback: direct download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Ajaykumar_Athmakuri_iOS_Resume.html';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  }
+}
+</script>
+</body>
+</html>
